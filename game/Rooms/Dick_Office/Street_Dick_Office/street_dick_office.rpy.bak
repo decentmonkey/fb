@@ -1,0 +1,9 @@
+label street_dick_office:
+    scene black_screen
+    with Dissolve(1)
+    call textonblack("The End of V0.1\nTo be continued very soon...")
+    scene black_screen
+    with Dissolve(1)
+    
+    $ renpy.full_restart(transition=Fade(1.0, 1.0, 1.0))
+    return

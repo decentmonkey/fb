@@ -1,0 +1,274 @@
+label gas_saleswoman_scene1: #начало, фоткает себя и общается с парнем, лаская себя
+    saleswoman "saleswoman scene1"
+    saleswoman "Привет, милый!"
+    "Да, я на работе.
+    Ты этого хочешь? Я как раз собиралась расслабиться!"
+    "Хочешь меня увидеть? Хорошо!"
+    "Работа? Там все-равно никого нет.
+    И у нас не работает компьютер."
+    "Так что мне нет дела зайдет кто-то или нет!"
+    "Приготовься, милый.
+    Наши отношения еще не такие чтобы ты мог видеть это вживую, но по телефону я это сделать могу!"
+
+    return
+
+label gas_saleswoman_scene1_1: #сцена когда разбивается бутылка
+    saleswoman "saleswoman scene1_1"
+    return
+
+
+label gas_saleswoman_scene2: #продавщица испуганно прерывается криком из зала
+    saleswoman "saleswoman scene2"
+    m "ЭЙ!
+    ЗДЕСЬ КТО-НИБУДЬ ЕСТЬ?!"
+    saleswoman "ОЙ!!!"
+
+    return
+
+label gas_saleswoman_dialogue1:
+    img Gas_Station_Monica_OilTrader_1
+    with fadelong
+    saleswoman "Добрый день, Мэм.
+    Это вы кричали?"
+
+    m "Я кричала?
+    Между прочим, я здесь жду вас уже больше часа!"
+
+    img Gas_Station_Monica_OilTrader_3
+    saleswoman "Меня не было 10 минут.
+    Я была в туалете."
+    img Gas_Station_Monica_OilTrader_4
+    m "Это неважно, я жду достаточно, чтобы иметь претензии к вам.
+    Мне нужно залить бензин."
+    img Gas_Station_Monica_OilTrader_5
+    saleswoman "Мэм, у нас не работает компьютер и я не могу залить бензин."
+    img Gas_Station_Monica_OilTrader_6
+    m "Если вы не зальете бензин, то я свяжусь в вашим Боссом."
+    "И я расскажу ему что вас не было на рабочем месте."
+    img Gas_Station_Monica_OilTrader_5
+    saleswoman "Мэм, не стоит беспокоить моего Босса.
+    Он очень строгий.
+    Я залью Вам бензин"
+    img Gas_Station_Monica_OilTrader_6
+    m "Сразу бы так!"
+
+
+    #диалог с Моникой
+    $ gasStationQuestCompleted = True
+    $ gasStationQuestCompletedJust = True
+    return
+
+label gas_saleswoman_scene3: #разбивается бутылка
+    call gas_saleswoman_scene1_1()
+    sound snd_bottle_break
+    music Funk_Soul1
+    call bitch(7, "gas_saleswoman_decision") from _call_bitch_53
+    $ gasStationSaleswomanMischiefed = True
+    $ gasStationSaleswomanMischiefInProgress = False
+    $ remove_objective("gas_cashier_mischief")
+    $ remove_objective("find_gas_cashier")
+
+    img Gas_Station_Monica_OilTrader_1
+    with fadelong
+
+    saleswoman "Добрый день, Мэм.
+    Это вы разбили бутылку?"
+
+    m "Я разбила?
+    Между прочим, я здесь жду вас уже больше часа!"
+
+    img Gas_Station_Monica_OilTrader_3
+    saleswoman "Меня не было 10 минут.
+    Я была в туалете."
+
+    img Gas_Station_Monica_OilTrader_4
+    m "Это неважно, я жду достаточно, чтобы иметь претензии к вам.
+    Мне нужно залить бензин."
+
+    img Gas_Station_Monica_OilTrader_5
+    saleswoman "Мэм, у нас не работает компьютер и я не могу залить бензин."
+
+    img Gas_Station_Monica_OilTrader_6
+    m "Девочка.
+    У тебя проблема не с компьютером, а с твоей внешностью."
+
+    "Я понимаю, тебе только и делать что торговать бензином.
+    На большее у тебя не хватит ни красоты, ни мозгов."
+
+    img Gas_Station_Monica_OilTrader_7
+    "Но если ты не хочешь до конца своей жизни мыть полы.
+    То ты сейчас же свяжешься с начальством и решишь проблему."
+
+    img Gas_Station_Monica_OilTrader_8
+    m "Передай что перед тобой стоит Моника Бакфетт."
+
+    img Gas_Station_Monica_OilTrader_9
+    saleswoman "Мэм, одну минуту."
+
+    img Gas_Station_Monica_OilTrader_10
+    with fadelong
+    sound snd_phone1
+    pause 1.5
+    sound snd_phone2
+    saleswoman "Добрый день, Босс.
+    У меня здесь стоит женщина."
+
+    "Она представилась как Моника Бакфетт."
+
+    "Она требует залить бензин, но у меня не работает компьютер."
+
+    "Она настаивает.
+    Потребовала чтобы я связалась с Вами."
+
+    saleswoman_boss "Повтори еще раз, кто стоит?"
+
+    img Gas_Station_Monica_OilTrader_11
+    saleswoman "Моника Бакфетт."
+    saleswoman_boss "Ясно, наливай ей бензин."
+
+    img Gas_Station_Monica_OilTrader_12
+    saleswoman "Босс, но..."
+
+    saleswoman_boss "Налей, потом уладим документы."
+
+    img Gas_Station_Monica_OilTrader_13
+    saleswoman "Босс, еще секунду..."
+
+    img Gas_Station_Monica_OilTrader_14
+    saleswoman "О Боже!"
+
+    img Gas_Station_Monica_OilTrader_15
+    "Она разбила самое дорогое вино, которое было на витрине!"
+
+    menu:
+        "Обвинить во всем кассиршу":
+            call bitch(10, "gas_station_monicalied") from _call_bitch_54
+            $ gasStationMonicaLied = True
+        "Согласиться на возмещение ущерба":
+            call bitch(-5, "gas_station_monicalied") from _call_bitch_55
+            $ gasStationMonicaLied = False
+
+    if gasStationMonicaLied == True:
+        img Gas_Station_Monica_OilTrader_16
+        m "Я не разбивала его.
+        Оно стояло на самом краю."
+
+        "И когда я проходила, оно чуть не упало на меня.
+        Оно разбилось и чуть не поранило меня осколками."
+
+        img Gas_Station_Monica_OilTrader_17
+        m "Если вы не извинитесь передо мной за этот инцидент, то я подам в суд на вашу компанию."
+
+        img Gas_Station_Monica_OilTrader_18
+        saleswoman_boss "Я все слышал.
+        Извинись перед ней."
+
+        "Немедленно."
+
+        img Gas_Station_Monica_OilTrader_19
+        saleswoman "Но Босс...
+        Кто будет платить за эту бутылку."
+
+        saleswoman_boss "Стоимость бутылки будет вычтена из твоей зарплаты."
+
+        img Gas_Station_Monica_OilTrader_20
+        saleswoman "Но как...
+        Она стоит больше чем я зарабатываю за месяц."
+
+        img Gas_Station_Monica_OilTrader_21
+        saleswoman_boss "Впредь будь внимательнее.
+        А сейчас извинись перед мэм."
+
+        saleswoman_boss "Я все сказал.
+        До свидания."
+    else:
+        img Gas_Station_Monica_OilTrader_29
+        m "Да, я случайно задела бутылку.
+        Я оставлю свою визитку, чтобы вы прислали мне счет."
+        "Можете умножить его в 3 раза, но это не отменяет того что я ждала вашу сотрудницу больше часа!"
+        "И я требую извинений!"
+
+        img Gas_Station_Monica_OilTrader_22
+        saleswoman_boss "Я все слышал.
+        Извинись перед ней."
+        "Немедленно."
+
+        saleswoman "Но Босс, меня не было 10 минут!"
+        saleswoman_boss "Это неважно, тебя не было на рабочем месте!
+        Извинись или будешь уволена."
+        saleswoman_boss "Я все сказал.
+        До свидания."
+
+
+    sound snd_phone_short_beeps
+    img Gas_Station_Monica_OilTrader_22
+    w
+    img Gas_Station_Monica_OilTrader_23
+    w
+    img Gas_Station_Monica_OilTrader_22
+    w
+    img Gas_Station_Monica_OilTrader_23
+    w
+
+    img Gas_Station_Monica_OilTrader_24
+    with fadelong
+    saleswoman "...
+    Мэм...."
+
+    "Я...."
+
+    img Gas_Station_Monica_OilTrader_25
+    m "Ну, я жду?"
+
+    img Gas_Station_Monica_OilTrader_26
+    saleswoman "Я прошу прощения..."
+
+    "За..."
+
+    "За то, что...."
+
+    img Gas_Station_Monica_OilTrader_27
+    m "Ну??"
+
+    img Gas_Station_Monica_OilTrader_28
+    saleswoman "Я прошу прощения за то что меня долго не было."
+
+    if gasStationMonicaLied == True:
+        "И за то что я плохо поставила бутылку на витрину."
+
+    "Впредь такого не повторится.
+    Пожалуйста, извините меня."
+
+    img Gas_Station_Monica_OilTrader_29
+    m "Не так-то ты искренне извиняешься, как я погляжу.
+    Дай-ка телефон своего босса."
+
+    img Gas_Station_Monica_OilTrader_30
+    saleswoman "Мэм, пожалуйста!
+    Я искренне извиняюсь!"
+
+    "Простите меня!
+    Правда!"
+
+    img Gas_Station_Monica_OilTrader_31
+    m "Ладно.
+    Так уж и быть."
+
+    "Надеюсь впредь будешь внимательнее."
+    mt "Хи-хи"
+
+    $ gasStationQuestCompletedJust = True
+    $ gasStationQuestCompleted = True
+    music casualMusic
+    return
+
+label gas_salewoman_sorry_dialogue:
+#    img Gas_Station_Monica_OilTrader_8
+    if gasStationSaleswomanMischiefed == True:
+        saleswoman "Мэм, такого больше не повторится.
+        Пожалуйста, извините."
+    else:
+        saleswoman "Мэм, как вы видите я на рабочем месте.
+        Чем могу быть Вам полезна?"
+
+    return

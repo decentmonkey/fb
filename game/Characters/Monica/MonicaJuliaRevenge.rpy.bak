@@ -1,0 +1,675 @@
+default julia_monica_revenge_in_progress = False
+default julia_monica_revenge_undo_in_progress = False
+
+label floor2_julia_monica_revenge_start:
+    m "Хм...
+    Я обожглась когда гладила платье."
+
+    $ juliaLocation = "floor1"
+    wc
+    img 1061
+    "Это случилось из-за того что Юлия не приготовила его."
+    "Неужели я это просто так оставлю?"
+
+    menu:
+        "Я это так не оставлю, эту сучку Юлию надо наказать!":
+            $ julia_monica_revenge_in_progress = True
+            call bitch(5, "monica_julia_revenge_begin")
+            img 1061
+            "Как бы наказать Юлию?"
+
+            "То что я заберу половину зарплаты за это и все премиальные - это само собой."
+
+            "Надо что-то еще..."
+
+            "Может что-нибудь разлить?
+            Чтобы эта сучка замучалась убирать!"
+
+            "Надо поискать что-нибудь у зеркал, на столике для косметики!"
+
+        "Юлия и так много работает. Возможно она просто не успела погладить платье.":
+            $ julia_monica_revenge_undo_in_progress = True
+            $ julia_monica_revenge_in_progress = True
+            call bitch(-5, "monica_julia_revenge_begin")
+            m "Юлия и так много работает.
+            Она очень устает и, возможно, просто забыла приготовить платье."
+
+            "Но это не изменяет того что я должна ее проучить!"
+            "Может что-нибудь разлить?
+            Чтобы Юлии пришлось убирать?"
+
+            "Не знаю правильно это или нет, но я, пожалуй, сделаю это."
+
+            "Надо поискать что-нибудь у зеркал, на столике для косметики!"
+
+    $ add_objective("find_hair_dye", _("Найти что-нибудь что можно разлить и напакостить Юлии"), c_pink, 20)
+    $ subst_to_object("Teleport_Floor2_Stairs", "floor2_julia_monica_revenge_block_exits")
+    $ subst_to_object("Teleport_Bedroom", "floor2_julia_monica_revenge_block_exits")
+    $ subst_to_object("Teleport_Bathroom", "floor2_julia_monica_revenge_block_exits")
+    $ hairDyeSearchMode = True
+
+    return
+
+label floor2_julia_monica_revenge_hair_dye_taken:
+    $ remove_objective("find_hair_dye")
+    $ add_objective("spill_hair_dye", _("Разлить куда-нибудь краску для волос"), c_red, 20)
+    $ autorun_to_object("floor2", "floor2_julia_monica_revenge_look_for_spill_hair_dye")
+    return
+
+label floor2_julia_monica_revenge_look_for_spill_hair_dye:
+    img 1063
+    with fade
+    m "Хорошо!"
+
+    img 1064
+    m "Теперь надо разлить ее куда-то."
+    "Например вот туда, на ковер."
+    return
+
+label floor2_julia_monica_revenge_block_exits(obj_name, obj_data):
+    if julia_monica_revenge_undo_in_progress == False:
+        m "Я никуда не уйду пока не сделаю что-нибудь, чтобы наказать эту сучку Юлию!
+        Как она смеет?!"
+    else:
+        m "Я не хочу уходить пока не сделаю что задумала."
+    return
+
+
+label floor2_julia_monica_revenge_spill_hairdye_confirm:
+    menu:
+        "Разлить краску на ковер.":
+            jump Carpet_use_hairdye
+        "Не разливать красу.":
+            return
+
+label Carpet_use_hairdye:
+    #разливаем краску на ковер
+    $ remove_objective("spill_hair_dye")
+    img 1064
+    $ renpy.pause(1.5, hard=True)
+    sound snd_wet_dirt
+    img black_screen
+    with dissolve
+    $ remove_inventory("hairdye", 1, True)
+    $ renpy.pause(4.0, hard=True)
+    img 1065
+    with dissolve
+    if julia_monica_revenge_undo_in_progress == False:
+        m "Отлично!
+        Так-то лучше!"
+
+        "Все.
+        Теперь я себя чувствую отлично."
+
+        "Можно ехать по делам."
+    else:
+        m "Не знаю правильно-ли я сделала.
+        Но теперь ничего не изменишь."
+
+        "Хотя, все-равно я хотела менять этот ковер."
+        "Ладно, поеду по делам."
+
+    $ floor2SpotJustMade = True
+    $ floor2SpotEnabled = True
+
+    $ subst_to_object("Teleport_Floor2_Stairs", False)
+    $ subst_to_object("Teleport_Bedroom", False)
+    $ subst_to_object("Teleport_Bathroom", False)
+    $ subst_to_object("Teleport_Street", "floor2_julia_monica_revenge_julia_need_catch")
+    $ scene_transition = "Fade"
+    call refresh_scene()
+
+    $ autorun_to_object("floor1", "floor2_julia_monica_revenge_julia_catch")
+
+    return
+
+label floor2_julia_monica_revenge_julia_need_catch(obj_name, obj_data):
+    m "Надо сначала поговорить с Юлией, потом уже идти на улицу."
+    return
+label floor2_julia_monica_revenge_julia_catch:
+    if julia_monica_revenge_in_progress == True:
+        jump floor2_julia_monica_revenge_julia_punish
+#    if julia_monica_revenge_undo_in_progress == True:
+#        jump floor2_julia_monica_revenge_julia_punish_undo
+
+    return
+
+label floor2_julia_monica_revenge_julia_punish:
+    mt "Ага!"
+    "А вот и Юлия!"
+    if julia_monica_revenge_undo_in_progress == False:
+        "Попалась, мелкая сучка!"
+
+    return
+label floor2_julia_monica_revenge_julia_punish2:
+
+    if obj_data["action"] == "l":
+        mt "Ага!"
+        "А вот и Юлия!"
+        if julia_monica_revenge_undo_in_progress == False:
+            "Попалась, мелкая сучка!"
+        return
+    img 1066
+
+    if julia_monica_revenge_undo_in_progress == False:
+        m "ЮЛИЯ!
+        БЫСТРО КО МНЕ!!!"
+    else:
+        m "Юлия!
+        Можешь, пожалуйста, подойти ко мне?"
+    wc
+    sound highheels_run1
+    img 1067
+    with fade
+    julia "Да, Миссис Бакфетт?
+    Я Вас слушаю"
+
+    if julia_monica_revenge_undo_in_progress == False:
+        img 1068
+        m "У меня к тебе два вопроса.
+        Но ты должна хорошо подумать что ответишь на них."
+
+        "От этого зависит выйдешь-ли ты завтра на работу или нет."
+
+        if juliaPraiseOnOccasion == True:
+            m "И я не посмотрю на то что ты вкусно готовишь."
+
+        "Тебе понято???"
+    else:
+        img 1070
+        if juliaPraiseOnOccasion == True:
+            m "Хотела сказать тебе, что ты вкусно готовишь, Юлия"
+            "Но это еще не все."
+            m "У меня есть пара вопросов к тебе."
+        else:
+            m "У меня есть пара вопросов к тебе, Юлия.
+        Я бы хотела задать их тебе."
+
+    julia "Да, Миссис Бакфетт."
+    if julia_monica_revenge_undo_in_progress == False:
+        img 1069
+        "Задавайте.
+        Только пожалуйста, не увольняйте меня."
+    else:
+        img 1071
+        "Задавайте."
+
+    img 1070
+    m "Первый вопрос."
+    if julia_monica_revenge_undo_in_progress == False:
+        "ГДЕ ТЫ БЫЛА??
+        Я ИСКАЛА ТЕБЯ!!!"
+    else:
+        "Я не могла тебя нигде найти."
+
+
+    if julia_monica_revenge_undo_in_progress == False:
+        img 1071
+        if juliaNeedToCheckStreet == True:
+            julia "Но Миссис Бакфетт."
+            "Вы сами приказали мне идти на улицу посмотреть что случилось."
+
+            julia "Там человек из соседнего дома поцарапал газонокосилкой наш забор."
+            "Из-за этого был шум с утра."
+
+            img 1072
+            mt "Хм.
+            Я правда приказывала ей."
+
+            "Но где она так долго шлялась?
+            Почему столько времени?"
+
+            img 1073
+            m "Почему ты так долго ходила?
+            Неужели не выйти и не вернуться через минуту?"
+        else:
+            if juliaHasSexInPool == True:
+                julia "Миссис Бакфетт...."
+                "Я.. мммм...."
+                "Я просто выходила вынести мусор!!
+                Да!"
+            else:
+                julia "Миссис Бакфетт..."
+                "В это время регулярно подъезжает служба забора мусора."
+                "Я следовала инструкциям и передала весь мусор им."
+    else:
+        img 1074
+        if juliaNeedToCheckStreet == True:
+            julia "Но Миссис Бакфетт."
+            "Вы сами приказали мне идти на улицу посмотреть что случилось."
+
+            julia "Там человек из соседнего дома поцарапал газонокосилкой наш забор."
+            "Из-за этого был шум с утра."
+
+            m "Ах, да, точно.
+            Я совсем забыла."
+            "Извини."
+        else:
+            if juliaHasSexInPool == True:
+                julia "Миссис Бакфетт...."
+                "Я.. мммм...."
+                "Я просто выходила вынести мусор!!
+                Да!"
+            else:
+                julia "Миссис Бакфетт..."
+                "В это время регулярно подъезжает служба забора мусора."
+                "Я следовала инструкциям и передала весь мусор им."
+
+
+
+    if julia_monica_revenge_undo_in_progress == False:
+        m "ТЫ БЫЛА НУЖНА МНЕ!"
+
+        m "ЗДЕСЬ!!!"
+        img 1074
+        julia "Миссис Бакфетт.
+        Пожалуйста, простите меня."
+
+        if juliaNeedToCheckStreet == True:
+
+            "Дело в том что я не видела что произошло на улице."
+
+            "Но там был Фред.
+            Ваш водитель."
+
+            "Он рассказал мне в подробностях как все случилось."
+
+            "Я подумала что очень важно донести до Вас все в мельчайших деталях."
+
+            "Разговор занял у меня буквально 5 минут.
+            Ведь времени прошло совсем немного.
+            Взгляните на часы."
+        else:
+            "Я старалась управиться как можно быстрее."
+            "Все заняло не более 5 минут."
+            "Ведь времени прошло совсем немного.
+            Взгляните на часы."
+
+    else:
+        m "Мне была нужна твоя помощь, Юлия."
+        julia "Миссис Бакфетт.
+        Ведь времени прошло совсем немного.
+        Взгляните на часы."
+
+
+    img 1075
+    mt "Хм.
+    Времени и правда прошло мало."
+
+    "Видимо для меня поход в подвал был стрессом.
+    И время шло очень медленно."
+
+    if julia_monica_revenge_undo_in_progress == False:
+        img 1076
+        m "Второй вопрос!"
+
+        m "ПОЧЕМУ НЕ ГОТОВО МОЕ ПЛАТЬЕ???"
+
+        m "Оно оказалось не только не принесенным!
+        Но и не поглаженным!"
+
+        img 1077
+        julia "Но Миссис Бакфетт!"
+
+        "Вы говорили мне приготовить его завтра!"
+
+        "Я собиралась гладить и приводить в порядок весь оставшийся вечер!"
+
+        julia "Я бы легла посреди ночи, если бы понадобилось.
+        Но я сделала бы это платье неотразимым!"
+    else:
+        img 1075
+        m "Второй вопрос, Юлия."
+        "Я не смогла найти своего платья."
+        "Ты забыла его погладить?"
+
+        img 1077
+        julia "Миссис Бакфетт."
+        "Я никогда ничего не забываю из своих обязанностей."
+        "Вы говорили приготовить платье завтра.
+        И я это помню..."
+
+    img 1078
+    mt "Хм.
+    Мне действительно вчера позвонил Дик и уговорил меня встретиться сегодня."
+
+    mt "Я совсем забыла сказать об этом Юлии."
+
+    if julia_monica_revenge_undo_in_progress == False:
+        mt "Нет, но вы посмотрите какая сучка.
+        На все у нее есть ответ!"
+
+        mt "Вот такие они все.
+        Эти никчемные работники!"
+
+        "Все у них хорошо, а крайняя остаюсь как-будто Я!"
+
+        "Ну посмотрим что ты скажешь теперь..."
+    else:
+        mt "Получается Юлия не виновата?
+        И я зря сделала это пятно?"
+
+    if julia_monica_revenge_undo_in_progress == False:
+        img 1079
+        m "ЮЛИЯ!!!"
+
+        julia "Да, Миссис Бакфетт?"
+
+        m "ИДИ ЗА МНОЙ, НАВЕРХ!"
+    else:
+        img 1075
+        m "Юлия.
+        Наверху случился небольшой несчастный случай."
+        "Пойдем я тебе покажу."
+        julia "Да, Миссис Бакфетт, пойдемте."
+
+label skip11:
+
+    $ autorun_to_object("floor2", "floor2_julia_monica_revenge_go_to_floor2")
+    call change_scene("floor2")
+
+    return
+
+label floor2_julia_monica_revenge_go_to_floor2:
+    $ floor2SpotJustMade = False
+    if julia_monica_revenge_undo_in_progress == False:
+        img 1080
+        with fade
+        m "ВОТ!"
+        menu:
+            "Обвинить во всем Юлию":
+                m "ВОТ!"
+                m "ПОСМОТРИ ЧТО ТЫ НАДЕЛАЛА!!!"
+                call bitch(5, "monica_julia_revenge_lie")
+                $ juliaMonicaLied = True
+                img 1092
+                julia "Аххххх!!!"
+
+                img 1081
+                julia "Но Миссис Бакфетт!
+                Когда я проходила здесь в последний раз, этого пятна не было!"
+
+                img 1082
+                m "И?"
+
+                "ЧТО ТЫ ХОЧЕШЬ СКАЗАТЬ?"
+
+                "ЧТО ЭТО Я ПОСТАВИЛА ЭТО ПЯТНО???"
+
+                img 1083
+                julia "Нет, конечно, Миссис Бакфетт!"
+
+                "Я ни в коем случае не говорила этого!"
+
+                img 1082
+                m "А ОТКУДА ТОГДА ЭТО ПЯТНО?"
+
+                m "И ГЛАВНОЕ!
+                ЧТО ТЕПЕРЬ С ЭТИМ ДЕЛАТЬ???"
+
+
+            "Признаться что сама поставила пятно":
+                $ juliaMonicaLied = False
+                call bitch(-5, "monica_julia_revenge_lie")
+                m "Посмотри что из-за тебя случилось!"
+                "Пока я носилась сама с этим платьем, я поставила пятно на ковер!"
+                julia "Аххххх!!!"
+
+        img 1083
+        julia "Миссис Бакфетт, пожалуйста!"
+
+        "Это пятно так просто не оттереть."
+
+        "Этому ковру нужна химчистка!"
+
+        menu:
+            "Ты что, серьезно? Ты сама ототрешь это пятно!!!":
+                call bitch(10, "monica_julia_revenge_punished")
+                $ juliaPunished = True
+                $ juliaPunishedLow = False
+                $ juliaPunishedVoluntarily = False
+                $ juliaLocation = "floor2"
+                img 1084
+                m "Правда?"
+
+                "Да ты что, серьезно??"
+
+                "У меня как раз есть партнер у которого сеть элитных химчисток!"
+
+                "И исправить этот ковер будет совсем недорого!"
+
+                "Всего около $10.000."
+
+                "И я думаю вычту это с твоей зарплаты."
+
+                if juliaMonicaLied == False:
+                    "Хоть это пятно сделала и не ты, но в твои обязанности входит следить за порядком в доме."
+                    "Так что отвечать за это придется тебе!"
+
+                "Даже не знаю сколько тебе придется работать."
+
+                "Но это в любом случае будет дешевле для тебя, чем увольняться и платить неустойку за 3 года работы."
+
+                "Согласно нашему трудовому договору."
+
+                mt "Дик молодец."
+
+                "Всегда делает договора какие надо."
+
+                img 1086
+                julia "О Боже!!!"
+
+                "Миссис Бакфетт!"
+
+                "Умоляю!"
+
+                img 1085
+                "Пожалуйста!"
+
+                "Не надо!"
+
+                "(плачет)"
+
+                img 1087
+                m "..."
+
+                "Моя бедная девочка."
+
+                "Не думай что я такой же злой работодатель как и все."
+
+                "Напротив, я очень добрая."
+
+                "Я оказываю тебе безмерное доверие."
+
+                "Я разрешаю тебе оттереть это пятно до завтрашнего дня."
+
+                "Если ты этого не сделаешь, то я уволю тебя с неустойкой."
+
+                "Тебе понято?"
+
+                img 1088
+                julia "Да, Миссис Бакфетт."
+
+                "Мне понятно."
+
+                "(хмык)"
+
+                img 1089
+                m "Вот и славно."
+
+                "Не подведи мое доверие, девочка."
+
+                julia "(хмык)"
+
+                "Я не подведу Вас, Миссис Бакфетт."
+
+                m "Надеюсь ты ценишь мою доброту, Юлия."
+
+                img 1090
+                julia "Я очень ценю Вашу доброту, Миссис Бакфетт."
+
+                "Спасибо Вам."
+
+            "Я знаю что его не оттереть, я не буду заставлять тебя это делать.":
+                call bitch(-10, "monica_julia_revenge_punished")
+                $ juliaPunished = False
+                $ juliaPunishedLow = True
+                $ juliaPunishedVoluntarily = False
+                $ juliaLocation = "floor1"
+                img 1089
+                m "Деточка, я знаю что это пятно не оттереть."
+                "Я могла бы заставить тебя и ты бы стала пытаться это делать, верно?"
+
+                img 1083
+                julia "Конечно, Миссис Бакфетт!"
+                "Если бы Вы приказали, я бы сделала все что в моих силах!"
+
+                img 1089
+                m "Но я не буду заставлять тебя это делать, хотя ты и заслуживаешь хорошего наказания."
+                m "Надеюсь ты ценишь мою доброту, Юлия."
+                img 1090
+                julia "Я очень ценю Вашу доброту, Миссис Бакфетт."
+                "Спасибо Вам."
+    if julia_monica_revenge_undo_in_progress == True:
+        img 1080
+        with fade
+        call bitch(-15, "monica_julia_revenge_punished")
+        m "Вот!"
+        "Посмотри что я нечаянно сделала."
+
+        julia "Аххххх!!!"
+        img 1083
+        julia "Миссис Бакфетт, пожалуйста!"
+
+        "Это пятно так просто не оттереть."
+
+        "Этому ковру нужна химчистка!"
+
+        img 1089
+        m "Я знаю, Юлия."
+        "Это моя вина."
+
+        "Я все-равно собиралась выкидывать этот ковер, так что не стоит переживать."
+
+        img 1083
+        julia "Миссис Бакфетт!"
+        "Я бы могла попытаться оттереть это пятно."
+        "Это может занять много времени, но вы так добры ко мне, что я хотела бы вам помочь."
+        "Я могу заниматься этим пятном по утрам, пока Вы спите."
+        "Я могу это делать тихо, чтобы не беспокоить Вас."
+
+        menu:
+            "Да, Юлия, попытайся его оттереть в свободное время.":
+                call bitch(5, "monica_julia_revenge_punished_voluntarily")
+                $ juliaPunished = False
+                $ juliaPunishedLow = False
+                $ juliaPunishedVoluntarily = True
+                $ juliaLocation = "floor1"
+                img 1089
+                m "Да, Юлия, попытайся его оттереть в свободное время."
+                "Но не слишком усердствуй, ты и так очень устаешь."
+                img 1083
+                julia "Хорошо, Миссис Бакфетт."
+                "Я займусь им в свободное время."
+
+            "Нет, Юлия. Не стоит пытаться сделать невозможную работу.":
+                call bitch(-5, "monica_julia_revenge_punished_voluntarily")
+                $ juliaPunished = False
+                $ juliaPunishedLow = False
+                $ juliaPunishedVoluntarily = False
+                $ juliaPunishedNone = True
+                $ juliaLocation = "floor1"
+                img 1089
+                m "Нет, Юлия. Не стоит пытаться сделать невозможную работу."
+                "Я не садист."
+                img 1083
+                julia "Как скажете, Миссис Бакфетт."
+
+    $ julia_monica_revenge_in_progress = False
+    $ julia_monica_revenge_undo_in_progress = False
+    $ subst_to_object("Teleport_Street", False)
+    $ scene_transition = "Fade"
+    call refresh_scene()
+    return
+
+#label floor2_washing_accessories(obj_name, obj_data):
+
+#    return
+
+label floor2_julia_punished_autorun:
+    sound snd_scrub
+    return
+label julia_interact_punished(obj_name, obj_data):
+    if obj_data["action"] == "l":
+        $ img_num = renpy.random.randint(1,4)
+        if img_num == 1:
+            img 1446
+        if img_num == 2:
+            img 1483
+        if img_num == 3:
+            img 1940
+        if img_num == 4:
+            img 3395
+            img 3396
+        mt "Я считаю что эта гувернантка недостаточно старается."
+        mt "Бесполезное создание...
+        Фи..."
+
+    if obj_data["action"] == "t":
+        if day ==1 and day_time == "evening" and monicaEated == False:
+            jump julia_punished_talk_day1_evening
+        img 3395
+        w
+        img 3396
+        w
+        img 1446
+        w
+        stop sound
+
+        img 1450
+        julia "Миссис Бакфетт!"
+
+        "Я ототру это пятно."
+
+        "Я не подведу Ваше доверие."
+
+        "Обещаю!"
+
+        "Пожалуйста!"
+
+
+
+        sound snd_scrub
+    return
+
+label julia_punished_talk_day1_evening:
+
+#juliaPunishedVoluntarily
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#

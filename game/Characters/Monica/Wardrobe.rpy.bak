@@ -1,0 +1,119 @@
+default businessClothEnabled = False
+default businessClothNotFoundDay1 = False
+default businessClothSearchDressInProgress = False
+
+init python:
+    def change_cloth(in_cloth_type, in_cloth_name):
+        global cloth_type, cloth
+        cloth_type = in_cloth_type
+        cloth = in_cloth_name
+
+label wardrobe(name, obj_data):
+    if obj_data["action"] == "l":
+        m "Мой любимый гардероб."
+
+        "Здесь я храню свою одежду.
+        Конечно же не всю!
+        Она бы не поместилась сюда!"
+
+        "Здесь обычно только то что я собираюсь одевать именно сегодня."
+
+        "В обязанности гувернантки входит содержать одежду в надлежащем порядке."
+
+        "Ведь я никогда не одеваю одну и ту же одежду дважды!"
+        return
+    #1020, 1479
+    #1453 night
+
+    if day == 1:
+        if day_time == "day":
+            img 1479
+            sound wardrobe_open
+            m "Что бы мне надеть?"
+
+            menu:
+                "Нижнее белье":
+                    sound snd_found_dress
+#                    $ remove_dialogue()
+                    img 1022
+                    with fade
+                    "У меня отличные бедра."
+                    w
+                    $ change_cloth("Lingerie", "Lingerie1")
+
+                "Домашняя одежда":
+#                    $ day_time = "evening"
+#                    $ day_suffix = "_Evening"
+                    $ remove_objective("dress_homecloth")
+                    sound snd_found_dress
+#                    $ remove_dialogue()
+                    img 1023
+                    with fade
+                    "Очень мило смотрится."
+                    img 1024
+                    w
+                    $ change_cloth("HomeCloth", "HomeCloth1")
+
+                "Красивое платье":
+                    if bathTaken == False:
+                        m "Мне надо принять душ прежде чем одевать одежду на выход!"
+                        return
+
+                    if businessClothNotFoundDay1 == True:
+                        m "Хм. Странно.
+                        Платья тут нет."
+
+                        if juliaMonicaYell == True:
+                            "Так, ну все.
+                            Где эта Юлия???"
+                            "Пойду отчитаю ее и сделаю последнее предупреждение."
+
+                            "В любом случае у нее не более 5 минут чтобы подготовить мое платье!"
+                        else:
+                            "Где Юлия?"
+
+                        $ add_objective("find_julia", _("Найти Юлию и узнать где платье."), c_pink, 20)
+                        $ autorun_to_object("floor1_stairs", "floor1_no_julia")
+
+                        call julia_scene_basement1()
+
+                        return
+
+                    if businessClothEnabled == False:
+                        m "Рано одеваться на выход.
+                        Надо доделать домашние дела."
+                        return
+
+                    $ remove_inventory("businesscloth1", 1)
+                    $ remove_objective("dress_businesscloth")
+
+                    sound snd_found_dress
+#                    $ remove_dialogue()
+                    img 1058
+                    with fade
+                    img 1059
+                    "Весь мир у моего каблука!"
+
+                    img 1060
+                    mt "Теперь пойду вниз.
+                    Надо выйти на улицу."
+
+                    $ autorun_to_object("floor2", "floor2_julia_monica_revenge_start")
+                    $ change_cloth("BusinessCloth", "BusinessCloth1")
+                    $ subst_to_object("Wardrobe", "wardrobe_blocked_day1_day")
+
+    call expression scene_name from _call_expression_3
+    return
+
+label Wardrobe_use_businesscloth:
+    sound put_dress
+    $ remove_objective("dress_businesscloth")
+    $ remove_inventory("businesscloth1", 1)
+    $ obj_data = {"action" : "h"}
+    call wardrobe("Wardrobe", obj_data) from _call_wardrobe
+    return
+
+label wardrobe_blocked_day1_day(obj_name, obj_data):
+    m "Мне уже надоело переодеваться.
+    Нет времени, пора ехать по делам."
+    return

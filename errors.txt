@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+The label after_load is defined twice, at
+  File "game/00_Functions/scene_controller.rpy", line 129 and
+  File "game/scripts/init.rpy", line 192.
+
+Ren'Py Version: Ren'Py 6.99.14.3.3347
+Mon Oct 15 09:35:06 2018

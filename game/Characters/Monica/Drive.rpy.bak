@@ -1,0 +1,456 @@
+#target_scene
+#target_map_scene
+
+default driveCanceled = False
+
+label start_drive():
+    $ driveCanceled = False
+    call get_into_car()
+    sound snd_car_turn_on
+    call startDriving()
+    if driveCanceled == True:
+        return
+    $ map_scene = target_map_scene
+    call change_scene(target_scene, "Fade_long", "snd_car_engine")
+    return
+
+label start_drive_direct():
+    call change_scene(target_scene, "Fade_long", "snd_car_engine")
+    return
+
+label startDriving:
+    if checkMapVisited("Monica_Office") == False:
+        call drive_speak_monica_office()
+        return
+    if dickMeetingPlannedDay1 == True and dickRefuelPlanned == False and target_map_scene == "Dick_Office": #едем к Дику, нужна заправка
+        call drive_speak_monica_dick_day1_need_refuel1()
+        return
+    return
+
+label get_into_car:
+    fred "Мэм, пожалуйста, садитесь."
+    "Я Вам помогу."
+    return
+
+
+label drive_speak_monica_office:
+    imgr 1126
+    menu:
+        "Задирать Фреда.":
+            jump drive_speak_monica_office_1
+        "Молча ехать и смотреть инстаграм.":
+            return
+
+label look_at_car(look_at_car_stage):
+    if look_at_car_stage == 0:
+        m "Моя машинка.
+        Я на ней езжу."
+        "Это внедорожник. Я купила его, потому что осенью подмывало дорогу по пути от дома в город."
+        "Сейчас эта проблема решена.
+        Умолчу о том как.. Хи-хи."
+        "Но я все-равно к нему привыкла.
+        И, мне кажется, он меня тоже любит!"
+    return
+
+label drive_speak_monica_office_1:
+    call bitch(1, "fred_monica_office1")
+    sound snd_car_engine
+    imgr 1126
+    fred "Хорошая сегодня погода, Мэм!
+    Не правда-ли?"
+
+    imgl 1127
+    m "У тебя все всегда хорошо, кроме вождения, Фред!"
+
+    fred "Простите, Мэм?"
+
+    m "И пунктуальности."
+
+    fred "Простите, Мэм?
+    Я не расслышал."
+
+    m "Смотри на дорогу."
+
+    fred "Конечно, Мэм!"
+
+    menu:
+        "Продолжить задирать Фреда":
+            jump drive_speak_monica_office_2
+        "Молча ехать и смотреть инстаграм.":
+            return
+label drive_speak_monica_office_2:
+    call bitch(1, "fred_monica_office2")
+    sound snd_car_engine
+    imgr 1128
+    with fade
+    fred "Куда мы направляемся, Мэм?"
+
+    imgl 1129
+    m "Надо же, удосужился спросить."
+
+    "Едешь куда глаза глядят, как всегда."
+
+    "Даже не знаешь куда."
+
+    fred "Я еду и ожидаю Ваших распоряжений, Мэм."
+
+    fred "Как я могу предположить, мы едем, как обычно, в фитнесс зал?"
+
+    imgl 1130
+    m "Ты не угадал на этот раз, Фред!"
+
+    m "Мы не едем в фитнесс зал!"
+
+    fred "Куда же мы едем, Мэм?"
+
+    imgl 1131
+    m "Мы едем в Офис."
+
+    m "Из-за таких растяп как ты, я сегодня потратила много времени и уже опаздываю."
+
+    m "Так что едь быстрее."
+
+    imgr 1133
+    fred "Я еду по правилам, Мэм!"
+
+    imgl 1132
+    m "Правила задаю Я!"
+
+    "Запомни!"
+
+    menu:
+        "Продолжить задирать Фреда":
+            jump drive_speak_monica_office_3
+        "Молча ехать и смотреть инстаграм.":
+            return
+
+label drive_speak_monica_office_3:
+    call bitch(1, "fred_monica_office3")
+    sound snd_car_engine
+    imgl 1131
+    with fade
+    m "Да, кстати, Фред!"
+
+    imgr 1133
+    fred "Слушаю, Мэм."
+
+    m "У меня сегодня встреча вечером."
+
+    "Так что будь вовремя у моего офиса, ты понял??"
+
+    fred "Мэм, я буду вовремя, как всегда!"
+
+    imgl 1129
+    m "Ты не всегда бываешь вовремя, Фрэд!"
+
+    fred "Мэм, я ни разу не опаздывал к Вам."
+
+    "Если Вы про тот случай, то я просто стоял чуть подальше чем обычно."
+
+    "Так как рядом не было парковочных мест!"
+
+    imgl 1131
+    m "Я вышла.
+    Тебя на месте не было."
+
+    "Все просто!"
+
+    imgr 1133
+    fred "Я стараюсь, Мэм!"
+
+    menu:
+        "Продолжить задирать Фреда":
+            jump drive_speak_monica_office_4
+        "Молча ехать и смотреть инстаграм.":
+            return
+
+label drive_speak_monica_office_4:
+    call bitch(1, "fred_monica_office4")
+    sound snd_car_engine
+    imgr 1133
+    with fadelong
+    fred "Уже почти приехали, Мэм!"
+
+    imgl 1127
+    m "Помолчи.
+
+    Ты меня уже утомил."
+
+    imgr 1128
+    with fadelong
+    fred "Мэм, мы приехали."
+
+    imgl 1130
+    m "Мог бы ехать и побыстрее!"
+
+    fred "Я старался, Мэм!"
+
+    imgl 1132
+    m "Плохо старался, Фред!"
+
+    fred "Простите, Мэм."
+
+    m "Жди меня здесь."
+
+    fred "Конечно, Мэм!"
+
+    return
+
+
+label drive_speak_monica_dick_day1_need_refuel1:
+    imgl 1335
+    m "Поехали к офису Дика.
+    Ты знаешь где он находится?"
+
+    imgr 1336
+    fred "Да, Мэм."
+
+    "Я знаю где он."
+
+    "..."
+
+    "Мэм, у нас небольшая проблема."
+
+    music Groove2_85
+    imgl 1337
+    m "Что???"
+
+    "Проблема?"
+
+    menu:
+
+        "Проблемы могут быть только у тебя!":
+            call bitch(1, "fred_monica_fuel1")
+            $ fredOffendedRefuel = True
+            m "Что за проблема?"
+
+            "У нас не может быть проблем, Фрэд."
+
+            "Проблемы могут быть только у тебя!"
+
+            "..."
+
+            "Рассказывай, что у тебя за проблема?"
+
+            "Хотя я сомневаюсь что мне это будет интересно."
+
+        "Что за проблема?":
+            music casualMusic
+            m "Что за проблема?"
+            $ fredOffendedRefuel = False
+
+    fred "Нам надо заехать на заправку, Мэм."
+
+    if fredOffendedRefuel == True:
+        imgl 1338
+        m "Что???"
+
+        "На какую еще заправку, Фрэд?"
+
+        "Мы едем за Диком."
+
+        fred "Да, Мэм.
+        Я понимаю."
+
+        "Но мы не доедем до места назначения, если не заправимся."
+
+    $ map_objects["Teleport_Monica_Office"]["state"] = "disabled"
+    $ subst_to_object("Teleport_Monica_Office", "drive_speak_monica_dick_day1_need_refuel1_map_refuse")
+    $ map_objects["Teleport_Dick_Office"]["state"] = "disabled"
+    $ subst_to_object("Teleport_Dick_Office", "drive_speak_monica_dick_day1_need_refuel1_map_refuse")
+    $ map_objects["Teleport_House"]["state"] = "disabled"
+    $ subst_to_object("Teleport_House", "drive_speak_monica_dick_day1_need_refuel1_map_refuse")
+
+    $ map_objects["Teleport_Gas_Station"]["state"] = "visible"
+    $ subst_to_object("Teleport_Gas_Station", "drive_speak_monica_dick_day1_need_refuel2")
+
+    $ autorun_to_object("street_gas_station", "drive_speak_monica_dick_day1_need_refuel3")
+    $ add_objective("fuel_car", _("Заправить машину топливом"), c_green, 25)
+    $ driveCanceled = True
+    $ scene_transition = "Fade"
+    $ hud_preset_current = "map_locked"
+    call refresh_scene()
+    return
+
+label drive_speak_monica_dick_day1_need_refuel1_map_refuse(obj_name, obj_data):
+    fred "Мэм, мы не доедем до места назначения, если не заправимся."
+    return
+
+label drive_speak_monica_dick_day1_need_refuel2(obj_name, obj_data):
+    sound snd_car_engine
+    if fredOffendedRefuel == True:
+        imgl 1339
+        with fadelong
+        m "Фрэд!
+        Ты вообще нормальный или как??"
+
+        "Ты водитель!
+        Ты должен заботиться о керосине."
+
+        "Колесах."
+
+        "Не знаю что там еще."
+
+        imgr 1336
+        fred "О бензине, Мэм.
+        Не о керосине."
+
+        imgl 1340
+        m "Да хоть о воздухе, Фрэд!"
+
+        "Это не мои проблемы!"
+
+        "Я из-за тебя вынуждена опаздывать на встречу с человеком."
+
+        "Ты вообще понимаешь что тебе за это грозит?"
+
+    else:
+        imgl 1337
+        with fadelong
+        m "Фред!
+        Вообще-то я опаздываю на встречу!"
+
+    imgr 1341
+    fred "Я понимаю, Мэм.
+    Простите меня."
+
+    "Компьютер показывал неверные значения запаса хода."
+
+    if fredOffendedRefuel == True:
+        imgl 1342
+        m "Я нереально зла на тебя, Фрэд."
+
+
+    $ hud_preset_current = "default"
+    call process_drive_teleport_direct("Gas_Station", "street_gas_station")
+    return
+
+
+label drive_speak_monica_dick_day1_need_refuel3: #разговор на заправке
+    if fredOffendedRefuel == True:
+        imgr Driver_Stand
+        imgl Monica_BusinessCloth1_Arrogance1
+        m "Фред!"
+        "Мне показалось что заправка находится дальше чем мы ехали бы до Дика!"
+        fred "Да, Мэм!
+        Но это не конечная точка нашего маршрута, как я полагаю?"
+        "Мы бы доехали только туда.
+        У нас не осталось бы топлива на движение дальше."
+
+        m "...!!!
+        Фред!"
+        "Давай быстро заправляйся.
+        Я потом разберусь с тобой."
+    else:
+        m "Ладно, Фред.
+        Давай быстро заправляйся."
+
+#    imgr 1336
+    fred "Да, Мэм.
+    Это займет минуту."
+
+    img black_screen
+    with Dissolve(1)
+    pause 1
+    $ autorun_to_object("street_gas_station", "drive_speak_monica_dick_day1_need_refuel4")
+    $ scene_transition = "Fade"
+    call refresh_scene()
+    return
+
+label drive_speak_monica_dick_day1_need_refuel4:
+    imgr Driver_Stand
+    fred "Мэм, простите."
+
+    "У них сломался компьютер и они не принимают наш предоплаченный документ."
+
+    imgl Monica_BusinessCloth1_Arrogance1
+    m "И?"
+
+    fred "Нам не получается заправиться, Мэм."
+
+    m "Заплати картой."
+
+    fred "Мэм, у них не работает компьютер и терминал."
+
+    m "Заплати наличными."
+
+    fred "Они не принимают наличные, Мэм."
+
+    menu:
+        "Ты глупый никчемный человек, Фрэд.":
+            $ fredOffendedRefuel2 = True
+            call bitch(2, "fred_monica_fuel2")
+
+            imgl Monica_BusinessCloth1_Exclamation1
+            m "О, Фрэд.
+            Я все понимаю."
+
+            fred "Спасибо, Мэм."
+
+            m "Я все понимаю."
+
+            m "Я понимаю что если что-то надо сделать, то надо делать это самой."
+
+            m "Ты, как и все остальные работники, ни на что не способен."
+
+            imgl Monica_BusinessCloth1_Angry2
+            m "Ты глупый никчемный человек, Фрэд."
+
+            "..."
+
+            "Я пойду и разберусь сама."
+
+            "А ты жди здесь.
+            Больше от тебя толка нет."
+
+            fred "Да, Мэм."
+
+        "Ты сделал что мог.":
+            $ fredOffendedRefuel2 = False
+            call bitch(-2, "fred_monica_fuel2")
+            imgl Monica_BusinessCloth1_Angry3
+
+            m "Это плохие новости, Фрэд!"
+            fred "Мэм, простите."
+            m "Но я понимаю, что ты испробовал все варианты.
+            Это не твоя вина."
+            fred "Спасибо, Мэм."
+
+            m "Я пойду и попробую разобраться сама."
+            fred "Да, Мэм."
+            if dickMonicaOffended1 == False:
+                imgl Monica_BusinessCloth1_Thinking2
+                mt "В конце концов я даже Дику сказала что я самостоятельная и со всем могу справиться сама..."
+                "Пришла пора это доказать!"
+
+    $ gasStationFindingFuelQuest = True
+    music casualMusic
+
+    $ subst_to_object("Teleport_Monica_Office", False)
+    $ subst_to_object("Teleport_Dick_Office", False)
+    $ subst_to_object("Teleport_House", False)
+    $ subst_to_object("Teleport_Gas_Station", False)
+
+    $ autorun_to_object("gas_station_view1", "gas_station_no_saleswoman_caption")
+
+    $ scene_transition = "Fade"
+    $ map_enabled = False
+    $ gasStationFindingFuelQuest = True
+    call refresh_scene()
+    return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#

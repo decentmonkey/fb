@@ -1,0 +1,58 @@
+﻿I'm sorry, but an uncaught exception occurred.
+
+While running game code:
+  File "game/00_Functions/scene_controller.rpy", line 84, in script call
+    label show_scene_loop:
+  File "game/00_Functions/scene_controller.rpy", line 86, in script call
+    pause
+  File "game/00_Functions/objects.rpy", line 140, in script call
+    call expression func_name pass (obj_name, obj_data) from _call_expression
+  File "game/Rooms/House/Bedroom/bedroom2.rpy", line 62, in script call
+    call change_scene("floor2") from _call_change_scene_1
+  File "game/00_Functions/scene_controller.rpy", line 101, in script call
+    call expression scene_label from _call_expression_4
+  File "game/Rooms/House/floor2.rpy", line 24, in script
+    $ add_object_to_scene("Sofa", {"type":2, "base":"Floor2_Sofa", "click" : "floor2_environment", "actions" : "l", "zorder" : 0})
+  File "game/Rooms/House/floor2.rpy", line 24, in <module>
+    $ add_object_to_scene("Sofa", {"type":2, "base":"Floor2_Sofa", "click" : "floor2_environment", "actions" : "l", "zorder" : 0})
+  File "game/00_Functions/objects.rpy", line 63, in add_object_to_scene
+    obj_data = fill_object_properties(obj_name, data)
+  File "game/00_Functions/objects.rpy", line 16, in fill_object_properties
+    canvas_offset = get_canvas_offset(canvas_base_name)
+  File "game/00_Functions/offsets_table.rpy", line 1610, in get_canvas_offset
+    canvas_offsets = [int(round(float(src_canvas_offsets[0]) / 1080.0 * config.screen_height,2)), int(round(float(src_canvas_offsets[1]) / 1920.0 * config.screen_width,2)), int(math.ceil(round(float(src_canvas_offsets[2]) / 1080.0 * config.screen_height,2))), int(math.ceil(round(float(src_canvas_offsets[3]) / 1920.0 * config.screen_width,2)))]
+NameError: global name 'math' is not defined
+
+-- Full Traceback ------------------------------------------------------------
+
+Full traceback:
+  File "game/00_Functions/scene_controller.rpy", line 84, in script call
+    label show_scene_loop:
+  File "game/00_Functions/scene_controller.rpy", line 86, in script call
+    pause
+  File "game/00_Functions/objects.rpy", line 140, in script call
+    call expression func_name pass (obj_name, obj_data) from _call_expression
+  File "game/Rooms/House/Bedroom/bedroom2.rpy", line 62, in script call
+    call change_scene("floor2") from _call_change_scene_1
+  File "game/00_Functions/scene_controller.rpy", line 101, in script call
+    call expression scene_label from _call_expression_4
+  File "game/Rooms/House/floor2.rpy", line 24, in script
+    $ add_object_to_scene("Sofa", {"type":2, "base":"Floor2_Sofa", "click" : "floor2_environment", "actions" : "l", "zorder" : 0})
+  File "/Users/Denis/Desktop/RenPy/renpy-6.99.14.3-sdk/renpy/ast.py", line 862, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "/Users/Denis/Desktop/RenPy/renpy-6.99.14.3-sdk/renpy/python.py", line 1888, in py_exec_bytecode
+    exec bytecode in globals, locals
+  File "game/Rooms/House/floor2.rpy", line 24, in <module>
+    $ add_object_to_scene("Sofa", {"type":2, "base":"Floor2_Sofa", "click" : "floor2_environment", "actions" : "l", "zorder" : 0})
+  File "game/00_Functions/objects.rpy", line 63, in add_object_to_scene
+    obj_data = fill_object_properties(obj_name, data)
+  File "game/00_Functions/objects.rpy", line 16, in fill_object_properties
+    canvas_offset = get_canvas_offset(canvas_base_name)
+  File "game/00_Functions/offsets_table.rpy", line 1610, in get_canvas_offset
+    canvas_offsets = [int(round(float(src_canvas_offsets[0]) / 1080.0 * config.screen_height,2)), int(round(float(src_canvas_offsets[1]) / 1920.0 * config.screen_width,2)), int(math.ceil(round(float(src_canvas_offsets[2]) / 1080.0 * config.screen_height,2))), int(math.ceil(round(float(src_canvas_offsets[3]) / 1920.0 * config.screen_width,2)))]
+NameError: global name 'math' is not defined
+
+Darwin-17.7.0-x86_64-i386-64bit
+Ren'Py 6.99.14.3.3347
+ EP1-COMPLETED
+Tue Oct 16 20:21:14 2018

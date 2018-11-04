@@ -1,0 +1,89 @@
+label show_scene:
+    $ show_scene_loop_flag = False
+    if scene_refresh_flag == False:
+        jump show_scene_loop
+    $ hide_screens_for_scene()
+#    if dialogue_active_flag == True:
+#        $ renpy.show_screen("dialogue_down_arrow")
+#        $ renpy.pause()
+#        $ renpy.hide_screen("dialogue_down_arrow")
+
+label show_scene_now:
+    if define_version_current != define_version:
+        call define_autorun()
+
+    $ interface_blocked_flag = True
+    if scene_sound != False:
+        $ sound_to_play = get_filename(scene_sound)
+        play sound sound_to_play
+        $ scene_sound = False
+
+    hide screen sprites_hover_dummy_screen
+    window hide
+    if scene_transition != False and gui.scenes_transitions == True:
+        if scene_transition == "Fade":
+            scene black_screen at convert_resolution_transform
+            with Dissolve(0.2)
+#            $ renpy.pause(0.2, hard=True)
+        if scene_transition == "Fade_long":
+            scene black_screen at convert_resolution_transform
+            with Dissolve(0.7)
+#            $ renpy.pause(0.7, hard=True)
+
+    $ renpy.scene()
+    $ scene_image_file = get_image_filename(scene_image, True)
+    $ scene_refresh_flag == False
+    show screen show_image_screen(scene_image_file)
+    $ image_screen_scene_flag = True
+    show screen hud_screen(hud_presets[hud_preset_current])
+    define idle_len = 0.0
+    $ parse_transition_flag = True
+    $ interface_blocked_flag = False
+    show screen screen_sprites(scenes_data)
+    if parse_transition_flag == True:
+        if scene_transition != False and gui.scenes_transitions == True:
+            if scene_transition == "Fade":
+                with Dissolve(0.2)
+            if scene_transition == "Fade_long":
+                with Dissolve(0.7)
+    $ scene_transition = False
+
+    if scenes_data["autorun"].has_key(scene_name):
+        $ autorunFunc = scenes_data["autorun"][scene_name]
+        $ del scenes_data["autorun"][scene_name]
+        show screen sprites_hover_dummy_screen()
+        call expression autorunFunc
+        jump show_scene
+
+label show_scene_loop:
+    pause
+    if show_scene_loop_flag == False:
+        jump show_scene_loop
+    else:
+        jump show_scene
+
+
+label change_scene(scene_label, in_transition_name="Fade", in_sound_name="highheels_short_walk"):
+    $ scene_transition = in_transition_name
+    $ scene_sound = in_sound_name
+    $ scene_refresh_flag = True
+    call expression scene_label from _call_expression_4
+    return
+
+label refresh_scene():
+    $ scene_refresh_flag = True
+    $ show_scene_loop_flag = True
+    call expression scene_name from _call_expression_5
+    return
+
+label remove_dialogue():
+    python:
+        renpy.hide_screen("say")
+        renpy.hide_screen("choice")
+        renpy.hide("window")
+        dialogue_active_flag = False
+
+
+label after_load():
+    $ show_scene_loop_flag = True
+    jump show_scene

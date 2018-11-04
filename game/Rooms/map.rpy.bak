@@ -1,0 +1,119 @@
+default map_source_scene = ""
+default map_source_scene_hud_preset = ""
+default map_scene = "House"
+default target_map_scene = ""
+default movingByCar = True
+default visitedPlaces = {}
+
+init python:
+    def checkMapVisited(scene_name):
+        if visitedPlaces.has_key(scene_name):
+            return True
+        return False
+
+label map_show(car=False):
+    $ print "checkDialogueExists"
+    $ print checkDialogueExists()
+    if checkDialogueExists() == True:
+        return
+    $ movingByCar = car
+    call define_autorun() from _call_define_autorun_1
+
+    $ map_source_scene = scene_name
+    $ map_source_scene_hud_preset = hud_preset_current
+    $ hud_preset_current = "map"
+    call change_scene("map", "Fade", "open_map") from _call_change_scene_22
+    $ scene_refresh_flag = True
+    $ show_scene_loop_flag = True
+    return
+
+label map_close:
+    $ hud_preset_current = map_source_scene_hud_preset
+    call change_scene(map_source_scene, "Fade", "open_map") from _call_change_scene_29
+    return
+
+label map:
+    $ scene_name = "map"
+    $ scene_caption = ""
+    $ clear_scene_from_objects(scene_name)
+    $ scene_image = "scene_Map" + day_suffix
+
+    call define_hudpresets()
+
+    if hud_presets[hud_preset_current]["display_closemap"] == True:
+        $ add_object_to_scene("Close", {"type" : 2, "img_overlay": "map_close" + res.suffix, "base":"map_close_hover" + res.suffix, "click" : "map_environment", "actions" : "l", "zorder":10, "xsprite":1839, "ysprite":17})
+
+    python:
+        for key, val in map_objects.items():
+            stateSuffix = {
+                "invisible": False,
+                "visible" : "",
+                "active" : "_active",
+                "disabled" : "_disabled",
+            }
+            if stateSuffix[val["state"]] != False:
+                add_object_to_scene(key, {"type":3, "text" : val["text"], "xpos" : val["xpos"], "ypos" : (val["ypos"] - 95), "xsprite":val["xpos"], "ysprite":val["ypos"], "img_overlay": val["base"] + stateSuffix[val["state"]] + res.suffix, "base":val["base"] + stateSuffix[val["state"]] + "_hover" + res.suffix, "click" : "map_environment", "sprite_align":"dc", "high_sprite_hover": True, "layout" : "map" + stateSuffix[val["state"]]})
+
+#    $ add_object_to_scene("Teleport_Office", {"type":3, "text" : _("ОФИС МОНИКИ"), "xpos" : 921, "ypos" : 337, "xsprite":921, "ysprite":432, "img_overlay": "map_marker" + res.suffix, "base":"map_marker_hover" + res.suffix, "click" : "map_environment", "sprite_align":"dc", "high_sprite_hover": True, "layout" : "map"})
+#    $ add_object_to_scene("Teleport_Office", {"type":3, "text" : _("ОФИС МОНИКИ"), "xpos" : 921, "ypos" : 337, "xsprite":921, "ysprite":432, "img_overlay": "map_marker_disabled" + res.suffix, "base":"map_marker_disabled_hover" + res.suffix, "click" : "map_environment", "sprite_align":"dc", "high_sprite_hover": True, "layout" : "map_disabled"})
+#    $ add_object_to_scene("Teleport_Office", {"type":3, "text" : _("ОФИС МОНИКИ"), "xpos" : 921, "ypos" : 337, "xsprite":921, "ysprite":432, "img_overlay": "map_marker_active" + res.suffix, "base":"map_marker_active_hover" + res.suffix, "click" : "map_environment", "sprite_align":"dc", "high_sprite_hover": True, "layout" : "map_active"})
+
+    return
+
+
+label map_environment(obj_name, obj_data):
+    if obj_name == "Close":
+        call map_close() from _call_map_close
+        return
+    if obj_name == "Teleport_" + map_scene:
+        call map_close()
+        return
+    if movingByCar == False and bFredFollowingMonica == True:
+        m "Я что, ненормальная идти пешком по дороге?"
+        if day_time == "evening":
+            m "Тем более в такую темень!!"
+        "У меня есть водитель!"
+        "Пусть он и везет!"
+        return
+
+    if obj_name == "Teleport_House":
+        call process_drive_teleport("House", "street_house_main_yard")
+        return
+    if obj_name == "Teleport_Monica_Office":
+        call process_drive_teleport("Monica_Office", "street_monica_office")
+        return
+    if obj_name == "Teleport_Gas_Station":
+        call process_drive_teleport("Gas_Station", "street_gas_station")
+        return
+    if obj_name == "Teleport_Dick_Office":
+        call process_drive_teleport("Dick_Office", "street_dick_office")
+        return
+
+
+    m "drive!"
+    return
+
+
+label process_drive_teleport(in_target_map_scene, in_target_scene):
+    $ target_map_scene = in_target_map_scene
+    $ target_scene = in_target_scene
+    $ map_objects["Teleport_" + map_scene]["state"] = "visible"
+    $ map_objects["Teleport_" + target_map_scene]["state"] = "active"
+    $ hud_preset_current = map_source_scene_hud_preset
+    call start_drive()
+    if driveCanceled == True:
+        return
+    $ visitedPlaces[target_map_scene] = True
+    return
+
+label process_drive_teleport_direct(in_target_map_scene, in_target_scene):
+    $ target_map_scene = in_target_map_scene
+    $ target_scene = in_target_scene
+    $ map_objects["Teleport_" + map_scene]["state"] = "visible"
+    $ map_objects["Teleport_" + target_map_scene]["state"] = "active"
+    $ hud_preset_current = map_source_scene_hud_preset
+    call start_drive_direct()
+    if driveCanceled == True:
+        return
+    $ visitedPlaces[target_map_scene] = True
+    return

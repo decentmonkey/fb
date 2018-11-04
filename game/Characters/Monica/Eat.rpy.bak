@@ -1,0 +1,101 @@
+default monicaEated = False
+default juliaPraiseOnOccasion = False
+
+label eat:
+    if juliaLocation != "kitchen":
+        m "Мне надо распорядиться гувернантке подать еду на стол."
+
+        "Я не собираюсь заниматься этим сама!"
+
+        return
+
+    if day == 1:
+        if day_time == "day":
+            img 1051
+            "Юлия! Можешь подавать еду!"
+            img 1052
+            julia "Да, Миссис Бакфетт, одну секунду!"
+            wc
+            sound highheels_run2
+            img 1053
+            with fade
+            julia "Пожалуйста, Миссис Бакфетт."
+
+            "Приятного аппетита!"
+
+            menu:
+                "Спасибо и брысь отсюда!":
+                    img 1054
+                    m "Спасибо..."
+
+                    "И..."
+
+                    m "Брысь отсюда!"
+                    call bitch(2, "julia_eat_1_morning")
+
+                    julia "Да, Миссис Бакфетт.
+                    Не смею Вам мешать."
+
+                "Спасибо!":
+                    img 1054
+                    m "Спасибо..."
+
+                    "Можешь идти."
+
+                    call bitch(-2, "julia_eat_1_morning")
+
+                    julia "Да, Миссис Бакфетт.
+                    Не смею Вам мешать."
+
+            sound highheels_run1
+            wc
+            img 1055
+            with fade
+            m "Юлия готовит довольно вкусно."
+
+            "Мда, определенно вкусно."
+
+            "Может стоит ее похвалить?"
+
+            menu:
+                "Что за вздор, кого еще хвалить?":
+                    img 1056
+                    m "Что за вздор."
+                    "Кого хвалить?"
+                    "Какую-то служанку?"
+                    call bitch(2, "julia_eat_2_morning")
+
+                "Похвалить при случае":
+                    img 1055
+                    m "Похвалю ее при случае."
+                    call bitch(-2, "julia_eat_2_morning")
+                    $ juliaPraiseOnOccasion = True
+
+            $ monicaEated = True
+            $ remove_objective("eat")
+            $ juliaLocation = "none"
+
+            wc
+            img 1055
+            with fade
+            imgc Monica_HomeCloth1_Thinking1
+            m "Ну что-ж."
+
+            "Я Поела."
+            if bathTaken == True:
+                "Помылась."
+
+                "Теперь пора одеваться и идти на улицу."
+            else:
+                "Осталось принять душ, одеваться и идти на улицу"
+
+            "К Фреду."
+            "Пока этот никчемный болван куда-нибудь не подевался."
+
+            "Я собираюсь одеть новое платье.
+            Надеюсь Юлия его подготовила и повесила в шкаф.
+            Надо пойти в спальню проверить."
+
+            $ businessClothNotFoundDay1 = True
+
+    return
