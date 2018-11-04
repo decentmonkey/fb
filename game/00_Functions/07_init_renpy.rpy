@@ -54,6 +54,7 @@ define house_guard = Character(_("Охранник"), who_color=c_red) #Guard
 define dick_secretary = Character(_("Секретарша Дика"), who_color=c_red) #Dick Secretary
 define perry = Character(_("Перри"), who_color=c_green) #Perry
 define ralph = Character(_("Ральф Робертс"), who_color=c_green) #Ralph Roberts
+define beef = Character(_("Биф"), who_color=c_blue) #Beef
 define betty = Character(_("Бетти Робертс"), who_color=c_pink) #Betty Roberts
 define bardie = Character(_("Барди"), who_color=c_blue) #Bardie
 define bardie_t = Character(_("Барди"), who_color=c_blue, what_color=c_blue, what_italic=True) #Bardie
