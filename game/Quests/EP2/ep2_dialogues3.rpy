@@ -144,6 +144,10 @@ label monica_dick_dialogue1:
 
     return
 
+label monica_dick_secretary_dialogue2a:
+    #Моника пытается выйти из локации до того как поговороила с секретаршей Дика
+    mt "Я думаю мне надо проконтролировать эту сучку, вдруг она отправила факс?"
+    return
 label monica_dick_secretary_dialogue2:
     #render
     #Моника говорит с секретаршей Дика после разговора с Диком
