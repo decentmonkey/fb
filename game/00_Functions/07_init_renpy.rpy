@@ -50,6 +50,7 @@ define judge = Character(_("Судья"), who_color=c_blue) #Judge
 define reception_secretary = Character(_("Секретарь на рецепшине"), who_color=c_pink) #Reception Secretary
 define reception_secretary_t = Character(_("Секретарь на рецепшине"), who_color=c_pink, what_color=c_blue, what_italic=True) #Reception Secretary
 define reception = Character(_("Рецепшин Администратор"), who_color=c_pink) #Reception Administrator
+define reception_t = Character(_("Рецепшин Администратор"), who_color=c_pink) #Reception Administrator
 define house_guard = Character(_("Охранник"), who_color=c_red) #Guard
 define dick_secretary = Character(_("Секретарша Дика"), who_color=c_red) #Dick Secretary
 define perry = Character(_("Перри"), who_color=c_green) #Perry
@@ -59,5 +60,12 @@ define betty = Character(_("Бетти Робертс"), who_color=c_pink) #Bett
 define bardie = Character(_("Барди"), who_color=c_blue) #Bardie
 define bardie_t = Character(_("Барди"), who_color=c_blue, what_color=c_blue, what_italic=True) #Bardie
 define gas_boyfriend = Character(_("Бойфренд"), who_color=c_blue) #бойфренд девушки с заправки
+define hotel_staff = Character(_("Сотрудник Отеля"), who_color=c_blue) #сотрудник отеля
+define philip = Character(_("Филип"), who_color=c_blue) #Philip
+define empty_name = Character("", who_color=c_blue) #empty name
+
+define reporter1 = Character(_("Репортер 1", who_color=c_blue) #Reporter1
+define reporter2 = Character(_("Репортер 2", who_color=c_orange) #Reporter2
+define reporter3 = Character(_("Репортер 3", who_color=c_pink) #Reporter3
 
 define sound_from_side = Character(_("Звук"), who_color=c_blue)
