@@ -68,4 +68,7 @@ define reporter1 = Character(_("Репортер 1"), who_color=c_blue) #Reporte
 define reporter2 = Character(_("Репортер 2"), who_color=c_orange) #Reporter2
 define reporter3 = Character(_("Репортер 3"), who_color=c_pink) #Reporter3
 
+define citizen = Character(_("Незнакомец"), who_color=c_pink) #Stranger
+
+
 define sound_from_side = Character(_("Звук"), who_color=c_blue)
