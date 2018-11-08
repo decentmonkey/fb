@@ -64,8 +64,8 @@ define hotel_staff = Character(_("Сотрудник Отеля"), who_color=c_b
 define philip = Character(_("Филип"), who_color=c_blue) #Philip
 define empty_name = Character("", who_color=c_blue) #empty name
 
-define reporter1 = Character(_("Репортер 1", who_color=c_blue) #Reporter1
-define reporter2 = Character(_("Репортер 2", who_color=c_orange) #Reporter2
-define reporter3 = Character(_("Репортер 3", who_color=c_pink) #Reporter3
+define reporter1 = Character(_("Репортер 1"), who_color=c_blue) #Reporter1
+define reporter2 = Character(_("Репортер 2"), who_color=c_orange) #Reporter2
+define reporter3 = Character(_("Репортер 3"), who_color=c_pink) #Reporter3
 
 define sound_from_side = Character(_("Звук"), who_color=c_blue)

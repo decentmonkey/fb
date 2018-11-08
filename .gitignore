@@ -3,3 +3,6 @@ game/images/
 game/video/
 game/saves/
 game/cache/
+*.rpyc
+errors.txt
+log.txt

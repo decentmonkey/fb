@@ -6,7 +6,7 @@ label monica_fred_about_dick_dialogue1:
     "Можно Вас на минутку?"
     return
 
-label monica_fred_about_dick_dialogue1:
+label monica_fred_about_dick_dialogue2:
     #Моника подошла ко Фреду
     #render
     m "Что тебе надо, Фред?!" #зло

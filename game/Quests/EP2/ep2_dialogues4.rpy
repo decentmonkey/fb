@@ -381,7 +381,7 @@ label monica_office_secretary_dialogue4:
     return
 
 
-label monica_office_cabinet_beef_dialogue2:
+label monica_office_cabinet_beef_dialogue2a:
     #render
     #Моника заходит в кабинет Бифа, второй раз, для разговора о работе
     mt "Ну что-ж... Биф..."
@@ -551,6 +551,7 @@ label monica_office_cabinet_beef_dialogue4:
     beef "Ну что, ты согласна?"
     menu:
         "Согласиться.":
+            pass
 
         "Отказаться.":
             m "Я еще подумаю, Биф!"
