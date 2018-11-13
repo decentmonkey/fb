@@ -21,13 +21,13 @@ label citizen12_dialogue:
                         citizen "Ок..."
                         img Dial_Citizen_12_3
                         citizen "И все? А как же развлечься?"
-                        label .loop1
-                        menu:
-                            "Я никого не собираюсь развлекать!":
-                                #img Моника злится
-                                m "Я никого не собираюсь развлекать!"
-                            "Чем тебя развлечь? (disabled)":
-                                jump .loop1
+                        label .loop1:
+                            menu:
+                                "Я никого не собираюсь развлекать!":
+                                    #img Моника злится
+                                    m "Я никого не собираюсь развлекать!"
+                                "Чем тебя развлечь? (disabled)":
+                                    jump .loop1
                     else:
                         img Dial_Citizen_12_3
                         citizen "Мне неинтересны никакие флаеры!"

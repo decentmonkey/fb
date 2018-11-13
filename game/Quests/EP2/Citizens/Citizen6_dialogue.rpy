@@ -19,13 +19,13 @@ label citizen6_dialogue:
                         citizen "Взять флаер? Хорошо..."
                         img Dial_Citizen_6_3
                         citizen "Какой красивый флаер! Прямо такой-же как Ваше личико!"
-                        label citizen6_loop1
-                        menu:
-                            "Не надо сравнивать меня с флаером!":
-                                #img Моника злится
-                                m "Не надо сравнивать меня с флаером!"
-                            "Я Вам нравлюсь? (disabled)":
-                                jump citizen6_loop1
+                        label citizen6_loop1:
+                            menu:
+                                "Не надо сравнивать меня с флаером!":
+                                    #img Моника злится
+                                    m "Не надо сравнивать меня с флаером!"
+                                "Я Вам нравлюсь? (disabled)":
+                                    jump citizen6_loop1
                     else:
                         img Dial_Citizen_6_3
                         citizen "Я тороплюсь! Давайте в другой раз!"

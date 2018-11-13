@@ -20,14 +20,14 @@ label citizen1_dialogue:
                         citizen "Хорошо, давай сюда свой флаер!"
                         img Dial_Citizen_1_3
                         citizen "Тетя! А больше ты ничего мне не можешь дать?"
-                        label citizen1_loop1
-                        menu:
-                            "Больше ничего!":
-                                #img Моника злится
-                                call reduce_flyers()
-                                m "Больше ничего!"
-                            "А что бы ты хотел? (disabled)":
-                                jump citizen1_loop1
+                        label citizen1_loop1:
+                            menu:
+                                "Больше ничего!":
+                                    #img Моника злится
+                                    call reduce_flyers()
+                                    m "Больше ничего!"
+                                "А что бы ты хотел? (disabled)":
+                                    jump citizen1_loop1
                     else:
                         img Dial_Citizen_1_3
                         citizen "Мне не нужен твой флаер, тетя!"

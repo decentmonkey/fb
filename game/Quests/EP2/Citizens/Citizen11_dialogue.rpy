@@ -20,13 +20,13 @@ label citizen11_dialogue:
                         citizen "Ты мне кажешься знакомой... Эта одежда..."
                         img Dial_Citizen_11_3
                         citizen "Точно! Ты ведь предлагаешь услуги? Я бы не против!"
-                        label .loop1
-                        menu:
-                            "Я ничего не предлагаю!":
-                                #img Моника злится
-                                m "Я ничего не предлагаю!"
-                            "А какие услуги Вас интересуют? (disabled)":
-                                jump .loop1
+                        label .loop1:
+                            menu:
+                                "Я ничего не предлагаю!":
+                                    #img Моника злится
+                                    m "Я ничего не предлагаю!"
+                                "А какие услуги Вас интересуют? (disabled)":
+                                    jump .loop1
                     else:
                         img Dial_Citizen_11_3
                         citizen "Я занят!"

@@ -19,13 +19,13 @@ label citizen5_dialogue:
                         citizen "Я взять этот флаер..."
                         img Dial_Citizen_5_3
                         citizen "Я думать Вы предлагать место?"
-                        label citizen5_loop1
-                        menu:
-                            "Я ничего не предлагаю! Просто возьмите флаер!":
-                                #img Моника злится
-                                m "Я ничего не предлагаю! Просто возьмите флаер!"
-                            "Место для чего? (disabled)":
-                                jump citizen5_loop1
+                        label citizen5_loop1:
+                            menu:
+                                "Я ничего не предлагаю! Просто возьмите флаер!":
+                                    #img Моника злится
+                                    m "Я ничего не предлагаю! Просто возьмите флаер!"
+                                "Место для чего? (disabled)":
+                                    jump citizen5_loop1
                     else:
                         img Dial_Citizen_5_3
                         citizen "У Мистера нет времени вашего места!"

@@ -2,17 +2,25 @@
 errors listed below, and try again.
 
 
-The label monica_fred_about_dick_dialogue1 is defined twice, at
-  File "game/Quests/EP2/ep2_dialogues3.rpy", line 3 and
-  File "game/Quests/EP2/ep2_dialogues3.rpy", line 9.
+File "game/Quests/EP2/Citizens/Citizen11_dialogue.rpy", line 23: expected ':' not found.
+    label .loop1
+                ^
 
-The label monica_office_cabinet_beef_dialogue2 is defined twice, at
-  File "game/Quests/EP2/ep2_dialogues4.rpy", line 311 and
-  File "game/Quests/EP2/ep2_dialogues4.rpy", line 384.
+File "game/Quests/EP2/Citizens/Citizen12_dialogue.rpy", line 24: expected ':' not found.
+    label .loop1
+                ^
 
-The label monica_charity_event_dialogue4 is defined twice, at
-  File "game/Quests/EP2/ep2_dialogues5.rpy", line 187 and
-  File "game/Quests/EP2/ep2_dialogues5.rpy", line 192.
+File "game/Quests/EP2/Citizens/Citizen13_dialogue.rpy", line 24: expected ':' not found.
+    label .loop1
+                ^
+
+File "game/Quests/EP2/Citizens/Citizen14_dialogue.rpy", line 24: expected ':' not found.
+    label .loop1
+                ^
+
+File "game/Quests/EP2/Citizens/Citizen15_dialogue.rpy", line 26: expected ':' not found.
+    label .loop1
+                ^
 
 Ren'Py Version: Ren'Py 6.99.14.3.3347
-Wed Nov  7 23:20:06 2018
+Tue Nov 13 14:41:57 2018

@@ -20,13 +20,13 @@ label citizen3_dialogue:
                         img Dial_Citizen_3_3
                         citizen "А что на нем? Ваш номер телефона?"
                         "Вы девочка по вызову?"
-                        label citizen3_loop1
-                        menu:
-                            "НЕТ!":
-                                #img Моника злится
-                                m "НЕТ!"
-                            "В общем нет, но... (disabled)":
-                                jump citizen3_loop1
+                        label citizen3_loop1:
+                            menu:
+                                "НЕТ!":
+                                    #img Моника злится
+                                    m "НЕТ!"
+                                "В общем нет, но... (disabled)":
+                                    jump citizen3_loop1
                     else:
                         img Dial_Citizen_3_3
                         citizen "Я занят! Пожалуйста, не отвлекайте меня!"

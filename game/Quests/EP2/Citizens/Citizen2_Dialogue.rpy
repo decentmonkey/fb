@@ -20,13 +20,13 @@ label citizen2_dialogue:
                         citizen "Хорошо, давай сюда свой флаер!"
                         img Dial_Citizen_2_3
                         citizen "Выпьешь со мной пива?"
-                        label citizen2_loop1
-                        menu:
-                            "Еще чего!":
-                                #img Моника злится
-                                m "Еще чего!"
-                            "У меня есть идея получше (disabled)":
-                                jump citizen2_loop1
+                        label citizen2_loop1:
+                            menu:
+                                "Еще чего!":
+                                    #img Моника злится
+                                    m "Еще чего!"
+                                "У меня есть идея получше (disabled)":
+                                    jump citizen2_loop1
                     else:
                         img Dial_Citizen_2_3
                         citizen "Мне не нужны никакие флаеры!"
