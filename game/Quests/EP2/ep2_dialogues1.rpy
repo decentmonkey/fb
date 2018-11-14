@@ -1,5 +1,5 @@
 
-#render
+#render+
 #сон ночью
 label sleep_scene1:
     #Дик, Моника и водитель в машине. День. Моника в платье AfterJail
@@ -423,7 +423,7 @@ label start_cleaning_choice1:
     return
 
 label cleaning_betty_comment1:
-    #render
+    #render+
     #комментарий Бетти hall2
     #если не набралось 3 дней уборки
     img 6017
@@ -468,7 +468,7 @@ label cleaning_betty_comment1:
     return
 
 label cleaning_bardie_comment1:
-    #render
+    #render+
     #иногда Барди появляется в комнате, где убирается Моника
     #комнаты floor1 (если нет Ральфа)
     img 6030
@@ -492,7 +492,7 @@ label cleaning_bardie_comment1:
     return
 
 label cleaning_bardie_comment2:
-    #render
+    #render+
     #когда Моника убирает у Барди в комнате
     img 6038
     w
@@ -514,7 +514,7 @@ label cleaning_bardie_comment2:
     return
 
 label cleaning_bardie_comment3:
-    #render
+    #render+
     #когда Моника убирает в bedroom_second
     img 6045
     w
@@ -554,7 +554,7 @@ label cleaning_monica_finished1:
 
 #Барди находится либо во дворе (днем), либо у себя в комнате или у лестницы (вечером)
 label bardie_comment4:
-    #render
+    #render+
     #Барди у лестницы
     img 6056
     bardie "Эй! Гувернантка!"
@@ -579,7 +579,7 @@ label bardie_comment5:
     return
 
 label monica_goout1_governess_restrict:
-    #render
+    #render+
     #Street_House_Gate Моника у ворот в униформе горничной, Бетти ее догоняет
     #Рендер в зависимости от времени дня!
     if day_time == "day":
